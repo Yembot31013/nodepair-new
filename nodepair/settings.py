@@ -91,6 +91,16 @@ if DEBUG:
         },
     }
 
+else:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [os.environ['REDIS_URL']],
+            },
+        },
+    }
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -106,7 +116,7 @@ if not DEBUG:
     DATABASES = {
         'default': dj_database_url.config(
             # Feel free to alter this value to suit your needs.
-            default='postgresql://postgres:postgres@localhost:5432/mysite',
+            default=os.environ['DATABASE_URL'],
             conn_max_age=600
         )
     }
